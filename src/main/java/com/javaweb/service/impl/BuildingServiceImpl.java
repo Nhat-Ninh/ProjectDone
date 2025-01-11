@@ -165,26 +165,26 @@ public class BuildingServiceImpl implements BuildingService {
         return responseDTO;
     }
 
-    @Override
-    public void updateAssignmentBuilding(AssignmentBuildingDTO assignmentBuildingDTO){
-
-
-        BuildingEntity buildingEntity = buildingRepository.findBuildingEntityById(assignmentBuildingDTO.getBuildingId());
-        if(buildingEntity == null){
-            throw new ServiceException(SystemConstant.BUILDING_NOT_FOUND);
-        }
-        List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
-        if(assignmentBuildingRepository.findById(assignmentBuildingDTO.getBuildingId())!= null){
-            assignmentBuildingRepository.deleteByBuildingEntity_Id(assignmentBuildingDTO.getBuildingId());
-        }
-        for(Long staff : assignmentBuildingDTO.getStaffIds()){
-            AssignmentBuildingEntity assignmentBuildingEntity = new AssignmentBuildingEntity();
-            assignmentBuildingEntity.setBuildingEntity(buildingEntity);
-            assignmentBuildingEntity.setUserEntity(userRepository.findById(staff).get());
-            assignmentBuildingEntities.add(assignmentBuildingEntity);
-        }
-        assignmentBuildingRepository.saveAll(assignmentBuildingEntities);
-    }
+//    @Override
+//    public void updateAssignmentBuilding(AssignmentBuildingDTO assignmentBuildingDTO){
+//
+//
+//        BuildingEntity buildingEntity = buildingRepository.findBuildingEntityById(assignmentBuildingDTO.getBuildingId());
+//        if(buildingEntity == null){
+//            throw new ServiceException(SystemConstant.BUILDING_NOT_FOUND);
+//        }
+//        List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
+//        if(assignmentBuildingRepository.findById(assignmentBuildingDTO.getBuildingId())!= null){
+//            assignmentBuildingRepository.deleteByBuildingEntity_Id(assignmentBuildingDTO.getBuildingId());
+//        }
+//        for(Long staff : assignmentBuildingDTO.getStaffIds()){
+//            AssignmentBuildingEntity assignmentBuildingEntity = new AssignmentBuildingEntity();
+//            assignmentBuildingEntity.setBuildingEntity(buildingEntity);
+//            assignmentBuildingEntity.setUserEntity(userRepository.findById(staff).get());
+//            assignmentBuildingEntities.add(assignmentBuildingEntity);
+//        }
+//        assignmentBuildingRepository.saveAll(assignmentBuildingEntities);
+//    }
 
 
     private void saveThumbnail(@NotNull BuildingDTO buildingDTO, BuildingEntity buildingEntity) {

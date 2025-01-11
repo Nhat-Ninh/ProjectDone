@@ -1,8 +1,8 @@
 package com.javaweb.api.admin;
 
 import com.javaweb.model.dto.AssignmentBuildingDTO;
-import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.response.ResponseDTO;
+import com.javaweb.service.AssignmentService;
 import com.javaweb.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/assignments")
 public class AssignmentAPI {
     @Autowired
-    private BuildingService buildingService;
+    private AssignmentService assignmentService;
 
     @PostMapping
     public ResponseEntity<?> updateAssignmentBuilding(@RequestBody AssignmentBuildingDTO assignmentBuildingDTO) {
@@ -27,7 +27,7 @@ public class AssignmentAPI {
             return ResponseEntity.badRequest().body(responseDTO);
         }
         else {
-              buildingService.updateAssignmentBuilding(assignmentBuildingDTO);
+              assignmentService.updateAssignmentBuilding(assignmentBuildingDTO);
               return ResponseEntity.ok().body(assignmentBuildingDTO);
         }
 
