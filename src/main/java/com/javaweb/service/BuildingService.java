@@ -24,7 +24,5 @@ public interface BuildingService {
 
     ResponseDTO findStaffByBuildingId(Long buildingId);
 
-//    void updateAssignmentBuilding(AssignmentBuildingDTO assignmentBuildingDTO) throws ServiceException;
-
     int countBuilding (BuildingSearchRequest buildingSearchRequest);
 }
