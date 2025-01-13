@@ -3,6 +3,7 @@ package com.javaweb.service.impl;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.entity.AssignmentBuildingEntity;
 import com.javaweb.entity.BuildingEntity;
+import com.javaweb.entity.UserEntity;
 import com.javaweb.exception.ServiceException;
 import com.javaweb.model.dto.AssignmentBuildingDTO;
 import com.javaweb.repository.AssignmentBuildingRepository;
@@ -31,16 +32,11 @@ public class AssignmentServiceImpl implements AssignmentService {
         if(buildingEntity == null){
             throw new ServiceException(SystemConstant.BUILDING_NOT_FOUND);
         }
-        List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
-        if(assignmentBuildingRepository.findById(assignmentBuildingDTO.getBuildingId())!= null){
-            assignmentBuildingRepository.deleteByBuildingEntity_Id(assignmentBuildingDTO.getBuildingId());
-        }
-        for(Long staff : assignmentBuildingDTO.getStaffIds()){
-            AssignmentBuildingEntity assignmentBuildingEntity = new AssignmentBuildingEntity();
-            assignmentBuildingEntity.setBuildingEntity(buildingEntity);
-            assignmentBuildingEntity.setUserEntity(userRepository.findById(staff).get());
-            assignmentBuildingEntities.add(assignmentBuildingEntity);
-        }
-        assignmentBuildingRepository.saveAll(assignmentBuildingEntities);
+
+        List<UserEntity> userEntities = userRepository.findByIdIn(assignmentBuildingDTO.getStaffIds());
+        buildingEntity.getStaffs().clear();
+        buildingEntity.setStaffs(userEntities);
+
+        buildingRepository.save(buildingEntity);
     }
 }

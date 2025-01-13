@@ -96,17 +96,22 @@ public class BuildingServiceImpl implements BuildingService {
     @Override
     public BuildingEntity createOrUpdateBuilding(BuildingDTO buildingDTO) throws ServiceException {
         BuildingEntity buildingEntity = modelMapper.map(buildingDTO, BuildingEntity.class);
+        //luu anh
+        if(buildingDTO.getId()!= null){
+            BuildingEntity buildingEx = buildingRepository.findBuildingEntityById(buildingDTO.getId());
+            buildingEntity.setImage(buildingEx.getImage());
+        }
+        saveThumbnail(buildingDTO, buildingEntity);
+        if(buildingDTO.getId() != null){
+            BuildingEntity buildingEntity1 = buildingRepository.findBuildingEntityById(buildingDTO.getId());
+            buildingEntity.setStaffs(buildingEntity1.getStaffs());
+        }
+        //save TH ngoai le
         if(buildingDTO.getTypeCode() != null && buildingDTO.getTypeCode().size()!=0){
             List<String> typeCode = buildingDTO.getTypeCode();
             buildingEntity.setType(typeCode.stream().collect(Collectors.joining(",")));
         }
         buildingRepository.save(buildingEntity);
-
-        if(buildingDTO.getId() != null && !buildingDTO.getId().equals("")) rentAreaRepository.deleteByBuildingEntity(buildingEntity);
-        if(buildingDTO.getId() != null){
-            BuildingEntity buildingEntity1 = buildingRepository.findBuildingEntityById(buildingDTO.getId());
-            buildingEntity.setAssignmentBuildings(buildingEntity1.getAssignmentBuildings());
-        }
 
         List<RentAreaEntity> rentAreaEntity = new ArrayList<>();
         if(DataUtil.checkData(buildingDTO.getRentArea())){
@@ -130,7 +135,6 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     public void deleteById(List<Long> ids){
-     //rentAreaRepository.deleteByBuildingEntity_IdIn(ids);
      buildingRepository.deleteByIdIn(ids);
     }
 
@@ -139,19 +143,15 @@ public class BuildingServiceImpl implements BuildingService {
     public ResponseDTO findStaffByBuildingId(Long buildingId){
         List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1,"STAFF");
         BuildingEntity buildingEntity = buildingRepository.findBuildingEntityById(buildingId);
-        List<AssignmentBuildingEntity> staffss = buildingEntity.getAssignmentBuildings();
-        List<UserEntity> assignedStaffs = new ArrayList<>();// lay danh sach user dang quan ly toa nha co id = buildingid
-        for(AssignmentBuildingEntity it : staffss){
-            UserEntity userEntity = it.getUserEntity();
-            assignedStaffs.add(userEntity);
-        }
+
+        List<UserEntity> staffss = buildingEntity.getStaffs();
 
         List<StaffResponseDTO> staffResponseDTOs = new ArrayList<>(); // danh sach nhan vien tra ra
         for(UserEntity staff : staffs){
             StaffResponseDTO staffResponseDTO = new StaffResponseDTO();
             staffResponseDTO.setStaffId(staff.getId());
             staffResponseDTO.setFullName(staff.getFullName());
-            if(assignedStaffs.contains(staff)){
+            if(staffss.contains(staff)){
                 staffResponseDTO.setChecked("checked");
             }
             else{

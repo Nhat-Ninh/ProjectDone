@@ -231,11 +231,11 @@
                             <label class="col-sm-5 control-label">Hình ảnh của tòa nhà</label>
                             <input class="col-sm-6 control-label" type="file" id="uploadImage"/>
                             <div class="col-sm-9 ">
-                                <c:if test="${not empty model.image}">
-                                    <c:set var="imagePath" value="/repository${model.image}"/>
+                                <c:if test="${not empty building.image}">
+                                    <c:set var="imagePath" value="/repository${building.image}"/>
                                     <img src="${imagePath}" id="viewImage" width="300px" height="300px" style="margin-top: 50px">
                                 </c:if>
-                                <c:if test="${empty model.image}">
+                                <c:if test="${empty building.image}">
                                     <img src="/admin/image/default.png" id="viewImage" width="300px" height="300px">
                                 </c:if>
                             </div>
@@ -345,6 +345,11 @@
         $.each(formData, function(i,it){
             if(it.name != 'typeCode') json["" + it.name + ""]= it.value;
             else typeCode.push(it.value);
+
+            if('' !== imageBase64){
+                json['imageBase64']= imageBase64;
+                json['imageName'] = imageName;
+            }
         });
         json['typeCode'] = typeCode;
         console.log('AAA');
