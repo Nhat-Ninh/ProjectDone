@@ -143,9 +143,7 @@ public class BuildingServiceImpl implements BuildingService {
     public ResponseDTO findStaffByBuildingId(Long buildingId){
         List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1,"STAFF");
         BuildingEntity buildingEntity = buildingRepository.findBuildingEntityById(buildingId);
-
         List<UserEntity> staffss = buildingEntity.getStaffs();
-
         List<StaffResponseDTO> staffResponseDTOs = new ArrayList<>(); // danh sach nhan vien tra ra
         for(UserEntity staff : staffs){
             StaffResponseDTO staffResponseDTO = new StaffResponseDTO();

@@ -32,11 +32,9 @@ public class AssignmentServiceImpl implements AssignmentService {
         if(buildingEntity == null){
             throw new ServiceException(SystemConstant.BUILDING_NOT_FOUND);
         }
-
         List<UserEntity> userEntities = userRepository.findByIdIn(assignmentBuildingDTO.getStaffIds());
-        buildingEntity.getStaffs().clear();
+//        buildingEntity.getStaffs().clear(); ko can phai xoa vi manytomany giup delete r
         buildingEntity.setStaffs(userEntities);
-
         buildingRepository.save(buildingEntity);
     }
 }
