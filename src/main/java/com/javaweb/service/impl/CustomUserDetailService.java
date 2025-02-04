@@ -28,6 +28,7 @@ public class CustomUserDetailService implements UserDetailsService {
         if(userDTO == null){
             throw new UsernameNotFoundException("Username not found");
         }
+
         List<GrantedAuthority> authorities = new ArrayList<>();
         for(RoleDTO role: userDTO.getRoles()){
             authorities.add(new SimpleGrantedAuthority("ROLE_"+role.getCode()));
