@@ -24,4 +24,5 @@ public interface IUserService {
     List<UserDTO> getAllUsers(Pageable pageable);
     int countTotalItems();
     Map<Long, String> getListStaff();
+    boolean isStaff(String userName1, String userName2);
 }

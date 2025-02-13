@@ -9,12 +9,12 @@ import java.util.List;
 
 public class SecurityUtils {
 
-    public static MyUserDetail getPrincipal() {
+    public static MyUserDetail getPrincipal() { // lay thong tin users
         return (MyUserDetail) (SecurityContextHolder
                 .getContext()).getAuthentication().getPrincipal();
     }
 
-    public static List<String> getAuthorities() {
+    public static List<String> getAuthorities() { //lay danh sach role
         List<String> results = new ArrayList<>();
         List<GrantedAuthority> authorities = (List<GrantedAuthority>)(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
         for (GrantedAuthority authority : authorities) {

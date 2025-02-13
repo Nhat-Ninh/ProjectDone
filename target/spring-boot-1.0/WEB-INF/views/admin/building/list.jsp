@@ -141,6 +141,7 @@
 <%--                                            <input type="tel" class="form-control" name="managerPhone" value=${modelSearch.managerPhone}>--%>
                                                 <form:input path="managerPhone" class="form-control"></form:input>
                                         </div>
+                                        <security:authorize access="hasRole('MANAGER')">
                                         <div class="col-xs-2">
                                             <label>Chọn nhân viên</label>
                                             <form:select path="staffId" class="form-control">
@@ -148,6 +149,7 @@
                                                 <form:options items="${staffs}"></form:options>
                                             </form:select>
                                         </div>
+                                        </security:authorize>
                                     </div>
 
                                     <div class="col-xs-12">
@@ -179,12 +181,14 @@
                                 </svg>
                             </button>
                         </a>
+                        <security:authorize access="hasRole('MANAGER')">
                         <button class="btn btn-app btn-danger btn-sm" title="Xóa tòa nhà" id="btn-deleteBuilding">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building-fill-dash" viewBox="0 0 16 16">
                                 <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M11 12h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1"/>
                                 <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7.256A4.5 4.5 0 0 0 12.5 8a4.5 4.5 0 0 0-3.59 1.787A.5.5 0 0 0 9 9.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .39-.187A4.5 4.5 0 0 0 8.027 12H6.5a.5.5 0 0 0-.5.5V16H3a1 1 0 0 1-1-1zm2 1.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5m3 0v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5m3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5M7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5M4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
                             </svg>
                         </button>
+                        </security:authorize>
                     </div>
                 </div>
                 <div class="hr hr-18 dotted hr-double"></div>
@@ -223,15 +227,20 @@
                             <!-- Cột thao tác -->
                             <display:column title="Thao tác" escapeXml="false">
                                 <div class="hidden-sm hidden-xs btn-group">
-                                    <button class="btn btn-xs btn-success" onclick="assignmentBuilding(${tableList.id})" title="Giao tòa nhà">
+                                <security:authorize access="hasRole('MANAGER')">
+                                    <button class="btn btn-xs btn-success" onclick="assignmentBuilding(${tableList.id})"
+                                        title="Giao tòa nhà">
                                         <i class="ace-icon fa fa-users"></i>
                                     </button>
+                                </security:authorize>
                                     <a class="btn btn-xs btn-info" href="/admin/building-edit-${tableList.id}">
                                         <i class="ace-icon fa fa-pencil bigger-120"></i>
                                     </a>
+                                    <security:authorize access="hasRole('MANAGER')">
                                     <button class="btn btn-xs btn-danger" title="Xóa tòa nhà" onclick="deleteOneBuilding(${tableList.id})">
                                         <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                     </button>
+                                    </security:authorize>
                                 </div>
                             </display:column>
                         </display:table>

@@ -8,6 +8,7 @@ import com.javaweb.enums.TypeCode;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
+import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.BuildingService;
 import com.javaweb.service.impl.UserService;
 import com.javaweb.utils.DisplayTagUtils;
@@ -40,7 +41,10 @@ public class BuildingController {
         mav.addObject("district", District.getDistrict());
         mav.addObject("typeCode", TypeCode.getType());
         // xuong service va repo de xu ly
-
+       if(SecurityUtils.getAuthorities().contains(SystemConstant.STAFF_ROLE)){
+           Long staffId = SecurityUtils.getPrincipal().getId();
+           params.setStaffId(staffId);
+       }
         List<BuildingSearchResponse> results = buildingService.findAll(params, PageRequest.of(params.getPage()-1, params.getMaxPageItems() )) ;
         BuildingSearchResponse buildingList = new BuildingSearchResponse();
         buildingList.setTotalItems(buildingService.countBuilding(params));
@@ -63,6 +67,14 @@ public class BuildingController {
         ModelAndView mav = new ModelAndView( "/admin/building/edit");
         mav.addObject("district", District.getDistrict());
         mav.addObject("typeCode", TypeCode.getType());
+        //Hien thi toa nha theo nhan vien quan ly
+        if(SecurityUtils.getAuthorities().contains(SystemConstant.STAFF_ROLE)){
+            Long staffId = SecurityUtils.getPrincipal().getId();
+            if(buildingService.isStaffOfBuilding(staffId, id)==false){
+                mav.setViewName("error/notfound");
+                return mav;
+            }
+        }
         //findbuidlingbyid=>buildingDTO\
         BuildingDTO dto = new BuildingDTO();
         try{

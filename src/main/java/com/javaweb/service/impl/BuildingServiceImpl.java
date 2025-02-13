@@ -70,6 +70,18 @@ public class BuildingServiceImpl implements BuildingService {
         return buildingRepository.countBuilding(buildingSearchRequest);
     }
 
+    @Override
+    public boolean isStaffOfBuilding(Long staffId, Long buildingId) {
+        BuildingEntity buildingEntity = buildingRepository.findBuildingEntityById(buildingId);
+        UserEntity userEntity = userRepository.findById(staffId).get();
+        if(buildingEntity.getStaffs().contains(userEntity)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
 
     @Override
     public BuildingDTO findBuildingById(Long id) throws ServiceException{

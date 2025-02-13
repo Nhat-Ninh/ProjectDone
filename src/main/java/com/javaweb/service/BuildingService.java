@@ -25,4 +25,6 @@ public interface BuildingService {
     ResponseDTO findStaffByBuildingId(Long buildingId);
 
     int countBuilding (BuildingSearchRequest buildingSearchRequest);
+
+    boolean isStaffOfBuilding (Long staffId, Long buildingId);
 }

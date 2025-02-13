@@ -92,6 +92,18 @@ public class UserService implements IUserService {
         return staffList;
     }
 
+    @Override
+    public boolean isStaff(String userName1, String userName2) {
+        UserEntity userEntity1 = userRepository.findOneByUserNameAndStatus(userName1, 1);
+        UserEntity userEntity2 = userRepository.findOneByUserNameAndStatus(userName2, 1);
+        if(userEntity1.getUserName().contains(userEntity2.getUserName())) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
 
     @Override
     public int getTotalItems(String searchValue) {
