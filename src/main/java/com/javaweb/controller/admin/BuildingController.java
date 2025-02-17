@@ -32,7 +32,6 @@ public class BuildingController {
     private UserService userService;
     @Autowired
     private BuildingService buildingService;
-//    @GetMapping("/admin/building-list")
    @RequestMapping(value = "/admin/building-list", method = RequestMethod.GET)
    public ModelAndView getBuildings(@ModelAttribute("modelSearch") BuildingSearchRequest params, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView( "admin/building/list");
