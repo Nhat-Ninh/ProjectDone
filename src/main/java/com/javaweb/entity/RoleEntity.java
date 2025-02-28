@@ -1,9 +1,13 @@
 package com.javaweb.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
+@Getter
+@Setter
 @Entity
 @Table(name = "role")
 public class RoleEntity extends BaseEntity {
@@ -20,11 +24,13 @@ public class RoleEntity extends BaseEntity {
     private String code;
 
     public static long getSerialVersionUID() {
+
         return serialVersionUID;
     }
 
     @Override
     public Long getId() {
+
         return id;
     }
 

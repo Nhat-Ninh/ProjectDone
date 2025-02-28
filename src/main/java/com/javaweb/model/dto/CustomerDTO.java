@@ -1,8 +1,18 @@
 package com.javaweb.model.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
+@Getter
+@Setter
 public class CustomerDTO extends AbstractDTO{
+    @NotBlank(message = "Name can not be blank")
     private String name;
     private String managementStaff;
+    @NotBlank(message = "Phone number can not be blank")
     private String customerPhone;
     private String email;
     private String demand;

@@ -10,26 +10,22 @@ import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.BuildingService;
-import com.javaweb.service.impl.UserService;
+import com.javaweb.service.impl.UserServiceImpl;
 import com.javaweb.utils.DisplayTagUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController(value="buildingControllerOfAdmin")
 
 public class BuildingController {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
     @Autowired
     private BuildingService buildingService;
    @RequestMapping(value = "/admin/building-list", method = RequestMethod.GET)

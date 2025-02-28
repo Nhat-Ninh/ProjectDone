@@ -11,6 +11,7 @@ import com.javaweb.repository.RoleRepository;
 import com.javaweb.repository.UserRepository;
 import com.javaweb.service.IUserService;
 import org.apache.commons.lang.StringUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +24,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-public class UserService implements IUserService {
+@Transactional
+public class UserServiceImpl implements IUserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -36,7 +38,8 @@ public class UserService implements IUserService {
 
     @Autowired
     private UserConverter userConverter;
-
+    @Autowired
+    private ModelMapper modelMapper;
 
 
     @Override
@@ -102,6 +105,32 @@ public class UserService implements IUserService {
         else {
             return false;
         }
+    }
+
+    @Override
+    public UserEntity register(UserDTO userDTO) throws ServiceException {
+        String userName = userDTO.getUserName();
+        if(userRepository.existsByUserName(userName)) {
+            throw new ServiceException("Username already exists");
+        }
+        UserEntity newUser =UserEntity.builder()
+                .fullName(userDTO.getFullName())
+                .userName(userDTO.getUserName())
+                .status(1)
+                .build();
+        if(userDTO.getPassword()!= null){
+            String password = passwordEncoder.encode(userDTO.getPassword());
+            newUser.setPassword(password);
+        }
+        RoleEntity staffRole = roleRepository.findOneByCode("STAFF");
+        if(staffRole == null){
+            throw new ServiceException("Role not exists");
+        }
+        List<RoleEntity> roles = new ArrayList<>();
+        roles.add(staffRole);
+        newUser.setRoles(roles);
+        userRepository.save(newUser);
+        return null;
     }
 
 

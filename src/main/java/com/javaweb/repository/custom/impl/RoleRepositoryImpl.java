@@ -29,6 +29,11 @@ public class RoleRepositoryImpl implements RoleRepository {
 	}
 
 	@Override
+	public RoleEntity findById(long id) {
+		return null;
+	}
+
+	@Override
 	public List<RoleEntity> findAll() {
 		String sql = "select * FROM role as r";
 		Query query = entityManager.createNativeQuery(sql, RoleEntity.class);

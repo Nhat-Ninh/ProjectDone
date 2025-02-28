@@ -66,7 +66,7 @@
 												</div>
 											</div>
 											<div class="text-center">
-												<p class="mb-0 tex-center account">Don't have an account? <a class="nav-link" href="<c:url value='register.jsp'/>">Sign Up</a></p>
+												<p class="mb-0 tex-center account">Don't have an account? <a class="nav-link" href="<c:url value='/register'/>">Sign Up</a></p>
 											</div>
 
 										</div>

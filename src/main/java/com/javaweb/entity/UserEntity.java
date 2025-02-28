@@ -1,11 +1,18 @@
 package com.javaweb.entity;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "user")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class UserEntity extends BaseEntity {
 
     private static final long serialVersionUID = -4988455421375043688L;

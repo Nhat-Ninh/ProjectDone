@@ -69,4 +69,10 @@ public class HomeController {
 		}
 		return new ModelAndView("redirect:/trang-chu");
 	}
+
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public ModelAndView register() {
+        ModelAndView mav = new ModelAndView("register");
+        return mav;
+    }
 }

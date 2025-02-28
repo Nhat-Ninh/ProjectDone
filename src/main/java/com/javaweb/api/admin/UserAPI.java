@@ -4,10 +4,17 @@ import com.javaweb.constant.SystemConstant;
 import com.javaweb.exception.ServiceException;
 import com.javaweb.model.dto.PasswordDTO;
 import com.javaweb.model.dto.UserDTO;
+import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/user")
@@ -53,5 +60,32 @@ public class UserAPI {
             userService.delete(idList);
         }
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody UserDTO userDTO, BindingResult bindingResult) {
+        try{
+            if (bindingResult.hasErrors()) {
+                List<String> errorMessages = bindingResult.getFieldErrors()
+                        .stream()
+                        .map(FieldError::getDefaultMessage).collect(Collectors.toList());
+                return ResponseEntity.badRequest().body(errorMessages);
+            }
+            if(!userDTO.getPassword().equals(userDTO.getRetypePassword())){
+                ResponseDTO responseDTO = new ResponseDTO();
+                responseDTO.setMessage("Password does not match");
+                return ResponseEntity.badRequest().body(responseDTO);
+            }
+            userService.register(userDTO);
+            ResponseDTO responseDTO = new ResponseDTO();
+            responseDTO.setMessage("success");
+            return ResponseEntity.ok().body(responseDTO);
+        }
+        catch(ServiceException e){
+            ResponseDTO responseDTO = new ResponseDTO();
+            responseDTO.setMessage(e.getMessage());
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
+
     }
 }

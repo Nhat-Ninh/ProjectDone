@@ -1,7 +1,6 @@
 package com.javaweb.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +11,9 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "customer")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class CustomerEntity extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +35,9 @@ public class CustomerEntity extends BaseEntity {
 
   @OneToMany(mappedBy = "customerEntity" ,fetch = FetchType.LAZY)
   private List<AssignmentCustomerEntity> assignmentCustomers = new ArrayList<>();
+
+  @OneToMany(mappedBy = "customerEntity" ,fetch = FetchType.LAZY)
+  private List<TransactionEntity> transactions = new ArrayList<>();
 
 
 }

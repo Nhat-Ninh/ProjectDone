@@ -1,8 +1,10 @@
 package com.javaweb.service;
 
+import com.javaweb.entity.UserEntity;
 import com.javaweb.model.dto.PasswordDTO;
 import com.javaweb.model.dto.UserDTO;
 import com.javaweb.exception.ServiceException;
+import com.javaweb.model.response.ResponseDTO;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -25,4 +27,5 @@ public interface IUserService {
     int countTotalItems();
     Map<Long, String> getListStaff();
     boolean isStaff(String userName1, String userName2);
+    UserEntity register(UserDTO userDTO) throws ServiceException;
 }
