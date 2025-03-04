@@ -126,7 +126,7 @@
                             </div>
                         </div>
                         <input type="text" class="form-control mt-3" id="customerPhone" name="customerPhone" placeholder="Số điện thoại">
-                        <input type="text" class="form-control mt-3" id="status" name="status" placeholder="Nội dung">
+                        <input type="text" class="form-control mt-3" id="demand" name="demand" placeholder="Nội dung">
                         <button class="btn btn-primary px-4 mt-3" id="btnAdd">
                             Gửi liên hệ
                         </button>

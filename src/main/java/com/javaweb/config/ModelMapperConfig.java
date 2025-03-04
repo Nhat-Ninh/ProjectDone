@@ -1,5 +1,7 @@
 package com.javaweb.config;
 
+import com.javaweb.entity.BaseEntity;
+import com.javaweb.model.response.CustomerSearchResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

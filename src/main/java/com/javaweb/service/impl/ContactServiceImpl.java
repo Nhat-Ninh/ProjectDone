@@ -1,6 +1,7 @@
 package com.javaweb.service.impl;
 
 import com.javaweb.entity.CustomerEntity;
+import com.javaweb.enums.Status;
 import com.javaweb.exception.ServiceException;
 import com.javaweb.model.dto.CustomerDTO;
 import com.javaweb.repository.CustomerRepository;
@@ -22,7 +23,8 @@ public class ContactServiceImpl implements ContactService {
                 .fullName(customerDTO.getName())
                 .email(customerDTO.getEmail())
                 .phone(customerDTO.getCustomerPhone())
-                .status(customerDTO.getStatus())
+                .demand(customerDTO.getDemand())
+                .status("CHUA_XU_LY")
                 .isActive(1)
                 .build();
 

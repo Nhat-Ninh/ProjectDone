@@ -78,7 +78,7 @@ public class UserAPI {
             }
             userService.register(userDTO);
             ResponseDTO responseDTO = new ResponseDTO();
-            responseDTO.setMessage("success");
+            responseDTO.setMessage("Success!");
             return ResponseEntity.ok().body(responseDTO);
         }
         catch(ServiceException e){

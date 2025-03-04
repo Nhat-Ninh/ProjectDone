@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         .antMatchers("/admin/user-list","/admin/user-edit","/admin/user-edit-{id}","api/user").hasRole("MANAGER")
                         .antMatchers("/admin/building-edit-{id}","/admin/building-edit").hasAnyRole("MANAGER", "STAFF")
                         .antMatchers("/admin/**").hasAnyRole("MANAGER","STAFF","ADMIN")
-                        .antMatchers("/login", "/resource/**", "/trang-chu", "/api/**").permitAll()
+                        .antMatchers("/login", "/resource/**", "/trang-chu", "/api/**","/register").permitAll()
                 .and()
                 .formLogin().loginPage("/login").usernameParameter("j_username").passwordParameter("j_password").permitAll()
                 .loginProcessingUrl("/j_spring_security_check") //khong dc dieu huong

@@ -75,4 +75,6 @@ public class HomeController {
         ModelAndView mav = new ModelAndView("register");
         return mav;
     }
+
+
 }
