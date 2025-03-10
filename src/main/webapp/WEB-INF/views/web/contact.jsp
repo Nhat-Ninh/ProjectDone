@@ -119,7 +119,7 @@
                     <form id="formCustomer">
                         <div class="row">
                             <div class="col">
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Họ và tên">
+                                <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Họ và tên">
                             </div>
                             <div class="col">
                                 <input type="text" class="form-control" id="email" name="email" placeholder="Email">
@@ -247,9 +247,9 @@
         });
         // json['roleId']=2;
         let isValid = true;
-        if (!json['name']) {
-            $('#name').next('span').remove();
-            $('#name').after('<span style="color: red">Họ và tên không được để trống</span>');
+        if (!json['fullName']) {
+            $('#fullName').next('span').remove();
+            $('#fullName').after('<span style="color: red">Họ và tên không được để trống</span>');
             isValid = false;
         }
         if (!json['customerPhone']) {

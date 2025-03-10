@@ -38,7 +38,7 @@ public class ContactAPI {
                 return ResponseEntity.badRequest().body(responseDTO);
             }
 
-            if (DataUtil.checkData(contactDTO.getName()) && DataUtil.checkData(contactDTO.getCustomerPhone())) {
+            if (DataUtil.checkData(contactDTO.getFullName()) && DataUtil.checkData(contactDTO.getCustomerPhone())) {
                 contactService.addContact(contactDTO);
                 ResponseDTO responseDTO = new ResponseDTO();
                 responseDTO.setMessage("Thêm liên hệ thành công");

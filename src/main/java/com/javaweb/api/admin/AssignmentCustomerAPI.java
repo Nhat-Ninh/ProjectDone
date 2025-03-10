@@ -1,9 +1,9 @@
 package com.javaweb.api.admin;
 
 import com.javaweb.model.dto.AssignmentBuildingDTO;
+import com.javaweb.model.dto.AssignmentCustomerDTO;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.service.AssignmentService;
-import com.javaweb.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,23 +12,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/assignments")
-public class AssignmentAPI {
+@RequestMapping("/api/assignment")
+public class AssignmentCustomerAPI {
     @Autowired
     private AssignmentService assignmentService;
 
     @PostMapping
-    public ResponseEntity<?> updateAssignmentBuilding(@RequestBody AssignmentBuildingDTO assignmentBuildingDTO) {
+    public ResponseEntity<?> updateAssignmentBuilding(@RequestBody AssignmentCustomerDTO assignmentCustomerDTO) {
 
         //xuong repo lam
-        if(assignmentBuildingDTO.getBuildingId()==null && assignmentBuildingDTO.getBuildingId().equals("")){
+        if(assignmentCustomerDTO.getCustomerId()==null && assignmentCustomerDTO.getCustomerId().equals("")){
             ResponseDTO responseDTO = new ResponseDTO();
-            responseDTO.setMessage("Building ID is null");
+            responseDTO.setMessage("Customer ID is null");
             return ResponseEntity.badRequest().body(responseDTO);
         }
         else {
-              assignmentService.updateAssignmentBuilding(assignmentBuildingDTO);
-              return ResponseEntity.ok().body(assignmentBuildingDTO);
+            assignmentService.updateAssignmentCustomer(assignmentCustomerDTO);
+            return ResponseEntity.ok().body(assignmentCustomerDTO);
         }
 
 

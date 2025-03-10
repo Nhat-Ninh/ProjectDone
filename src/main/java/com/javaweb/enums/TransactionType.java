@@ -1,5 +1,7 @@
 package com.javaweb.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -12,13 +14,14 @@ public enum TransactionType {
     TransactionType(String name) {
         this.name = name;
     }
+    @JsonValue
     public String getName() {
         return name;
     }
-    public static Map<String, String> transactionType() {
+    public static Map<String, String> getTransactionType() {
         Map<String, String> transactionList = new LinkedHashMap<>();
         for (TransactionType transactionType : TransactionType.values()) {
-            transactionList.put(transactionType.toString(), transactionType.name());
+            transactionList.put(transactionType.toString(), transactionType.getName());
         }
         return transactionList;
     }

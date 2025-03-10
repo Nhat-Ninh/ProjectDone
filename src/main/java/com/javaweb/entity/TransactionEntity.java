@@ -1,14 +1,13 @@
 package com.javaweb.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "transaction")
+@Table(name ="transaction")
 public class TransactionEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +16,8 @@ public class TransactionEntity extends BaseEntity {
     private String code;
     @Column(name = "note")
     private String note;
+    @Column(name = "staffid")
+    private Long staffId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customerid")

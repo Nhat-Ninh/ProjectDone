@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -38,6 +37,12 @@ public class CustomerEntity extends BaseEntity {
 
   @OneToMany(mappedBy = "customerEntity" ,fetch = FetchType.LAZY)
   private List<TransactionEntity> transactions = new ArrayList<>();
+
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(name = "assignmentcustomer",
+          joinColumns = @JoinColumn(name = "customerid", nullable = false),
+          inverseJoinColumns = @JoinColumn(name = "staffid", nullable = false))
+  private List<UserEntity> staffs = new ArrayList<>();
 
 
 }

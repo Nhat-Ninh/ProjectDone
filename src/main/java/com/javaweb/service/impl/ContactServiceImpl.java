@@ -20,7 +20,7 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public CustomerEntity addContact(CustomerDTO customerDTO)throws ServiceException {
         CustomerEntity newCustomer = CustomerEntity.builder()
-                .fullName(customerDTO.getName())
+                .fullName(customerDTO.getFullName())
                 .email(customerDTO.getEmail())
                 .phone(customerDTO.getCustomerPhone())
                 .demand(customerDTO.getDemand())

@@ -10,7 +10,7 @@ import javax.validation.constraints.Pattern;
 @Setter
 public class CustomerDTO extends AbstractDTO{
     @NotBlank(message = "Name can not be blank")
-    private String name;
+    private String fullName;
     private String managementStaff;
     @NotBlank(message = "Phone number can not be blank")
     private String customerPhone;
@@ -27,12 +27,12 @@ public class CustomerDTO extends AbstractDTO{
         this.companyName = companyName;
     }
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getManagementStaff() {
