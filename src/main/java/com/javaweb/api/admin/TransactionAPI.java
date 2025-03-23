@@ -2,6 +2,7 @@ package com.javaweb.api.admin;
 
 import com.javaweb.model.dto.CustomerDTO;
 import com.javaweb.model.dto.TransactionDTO;
+import com.javaweb.model.request.DeleteRequest;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class TransactionAPI {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteTransaction(@PathVariable Long id,Long customerId) {
+    public ResponseEntity<?> deleteTransaction(@PathVariable Long id, Long customerId) {
         if(id==null){
             ResponseDTO responseDTO = new ResponseDTO();
             responseDTO.setMessage("Ids is empty");
@@ -54,7 +55,7 @@ public class TransactionAPI {
         }
         else {
             //xuongservice va xuong repo
-            transactionService.deleteById(id, customerId);
+            transactionService.deleteById(id,customerId);
             ResponseDTO responseDTO = new ResponseDTO();
             responseDTO.setMessage("Transaction deleted successfully");
             return ResponseEntity.ok().body(responseDTO);

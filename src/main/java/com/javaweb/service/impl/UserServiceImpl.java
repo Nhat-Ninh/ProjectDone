@@ -9,12 +9,17 @@ import com.javaweb.entity.UserEntity;
 import com.javaweb.exception.ServiceException;
 import com.javaweb.repository.RoleRepository;
 import com.javaweb.repository.UserRepository;
+import com.javaweb.security.utils.JwtTokenUtil;
 import com.javaweb.service.IUserService;
 import org.apache.commons.lang.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +45,11 @@ public class UserServiceImpl implements IUserService {
     private UserConverter userConverter;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @Override
     public UserDTO findOneByUserNameAndStatus(String name, int status) {
@@ -131,6 +140,21 @@ public class UserServiceImpl implements IUserService {
         newUser.setRoles(roles);
         userRepository.save(newUser);
         return null;
+    }
+
+    @Override
+    public String login(String userName, String password) throws Exception {
+        Optional<UserEntity> user = userRepository.findByUserName(userName);
+        if(!user.isPresent()){
+            throw new DataIntegrityViolationException("Invalid username or password");
+        }
+        UserEntity userEntity = user.get();
+        if(!passwordEncoder.matches(password, userEntity.getPassword())){
+            throw new BadCredentialsException("Wrong username or password");
+        }
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userName,password,userEntity.getAuthorities());
+        authenticationManager.authenticate(authenticationToken);
+        return jwtTokenUtil.generateToken(userEntity);
     }
 
 

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> , UserRepositoryCustom {
     UserEntity findOneByUserNameAndStatus(String name, int status);
@@ -19,6 +20,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> , UserRe
     UserEntity findOneByUserName(String userName);
     List<UserEntity> findByIdIn(List<Long> id);
     List<UserEntity> findByStatusAndRoles_Code(Long status,String roleCode);
-    UserEntity findByUserName(String userName);
+//    UserEntity findByUserName(String userName);
     boolean existsByUserName(String userName);
+    Optional<UserEntity> findByUserName(String userName);
 }

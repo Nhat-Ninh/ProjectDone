@@ -1,9 +1,14 @@
 package com.javaweb.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -13,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserEntity extends BaseEntity {
+public class UserEntity extends BaseEntity implements UserDetails {
 
     private static final long serialVersionUID = -4988455421375043688L;
 
@@ -37,6 +42,7 @@ public class UserEntity extends BaseEntity {
     private String email;
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @JsonManagedReference
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
@@ -79,8 +85,38 @@ public class UserEntity extends BaseEntity {
         this.fullName = fullName;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.emptyList();
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return "";
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
     }
 
     public void setPassword(String password) {

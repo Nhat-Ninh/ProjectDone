@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface TransactionRepository extends JpaRepository<TransactionEntity, Long> {
     public TransactionEntity findTransactionById(Long id);
-    public void deleteByTransaction_IdAndCustomer_Id(Long id, Long customerId);
+    public void deleteTransactionByIdAndCustomerEntity_Id(Long id, Long customerId);
     public List<TransactionEntity> findByCustomerEntity_IdAndCode(Long id,String code);
 }

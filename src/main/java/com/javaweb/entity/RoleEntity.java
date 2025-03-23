@@ -1,5 +1,6 @@
 package com.javaweb.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,34 +40,11 @@ public class RoleEntity extends BaseEntity {
         this.id = id;
     }
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private List<UserEntity> user = new ArrayList<>();
 
 //    @OneToMany(mappedBy="roles",fetch = FetchType.LAZY)
 //    private List<UserRoleEntity> userRoleEntities = new ArrayList<>();
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public List<UserEntity> getUsers() {
-        return user;
-    }
-
-    public void setUsers(List<UserEntity> users) {
-        this.user = users;
-    }
 
 }

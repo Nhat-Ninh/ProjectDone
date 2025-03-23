@@ -367,9 +367,13 @@
     })
 
     function AddBuilding(data){
+        var jwtToken = localStorage.getItem("jwtToken");
         $.ajax({
             url: "/api/buildings",
             type : "POST",
+            headers: {
+                "Authorization": "Bearer " + jwtToken
+            },
             contentType: 'application/json',
             data : JSON.stringify(data), //convert tu object json(JS) qua JSON
             // dataType:"JSON", //Kieu du lieu server tra ra

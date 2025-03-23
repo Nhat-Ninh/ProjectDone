@@ -5,6 +5,7 @@ import com.javaweb.entity.TransactionEntity;
 import com.javaweb.entity.UserEntity;
 import com.javaweb.exception.ServiceException;
 import com.javaweb.model.dto.TransactionDTO;
+import com.javaweb.model.request.DeleteRequest;
 import com.javaweb.repository.CustomerRepository;
 import com.javaweb.repository.TransactionRepository;
 import com.javaweb.repository.UserRepository;
@@ -91,16 +92,13 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public void deleteById(Long id, Long customerId){
-        transactionRepository.deleteByTransaction_IdAndCustomer_Id(id,customerId);
+    public void deleteById(Long id, Long customerId) throws ServiceException {
+        transactionRepository.deleteTransactionByIdAndCustomerEntity_Id(id,customerId);
     }
 
     @Override
     public List<TransactionDTO> customerDdx(Long customerId) throws ServiceException {
         List<TransactionEntity> transactionEntities = transactionRepository.findByCustomerEntity_IdAndCode(customerId,"DDX");
-        if(transactionEntities == null || transactionEntities.isEmpty()){
-            throw new ServiceException("Transaction is not found");
-        }
         List<TransactionDTO> result = new ArrayList<TransactionDTO>();
         for(TransactionEntity transactionEntity : transactionEntities){
             TransactionDTO transactionDTO = modelMapper.map(transactionEntity, TransactionDTO.class);
@@ -113,9 +111,6 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<TransactionDTO> customerCskh(Long customerId) throws ServiceException {
         List<TransactionEntity> transactionEntities = transactionRepository.findByCustomerEntity_IdAndCode(customerId,"CSKH");
-        if(transactionEntities == null || transactionEntities.isEmpty()){
-            throw new ServiceException("Transaction is not found");
-        }
 
         List<TransactionDTO> result = new ArrayList<TransactionDTO>();
         for(TransactionEntity transactionEntity : transactionEntities){

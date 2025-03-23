@@ -287,9 +287,13 @@
     }
 
     function loadStaff(id){
+        var jwtToken = localStorage.getItem("jwtToken");
         $.ajax({
             url: "/api/buildings/"+id+"/staffs",
             type:"GET",
+            headers: {
+                "Authorization": "Bearer " + jwtToken
+            },
             // data : JSON.stringify(data), //Convert từ Object trong JS qua JSON
             dataType : "JSON", //Định dạng dữ liệu nhận từ server
             contentType: "application/json",
@@ -355,9 +359,13 @@
     }
     /* BEGIN AJAX*/
     function updateAssignment(data){
+        var jwtToken = localStorage.getItem("jwtToken");
         $.ajax({
             url: "/api/assignments",
             type:"POST",
+            headers: {
+                "Authorization": "Bearer " + jwtToken
+            },
             data : JSON.stringify(data), //Convert từ Object trong JS qua JSON
             dataType : "JSON", //Định dạng dữ liệu nhận từ server
             contentType: "application/json",
@@ -374,9 +382,13 @@
 
     function deleteBuilding(data){
         console.log("http://localhost:8080/api/buildings/"+data);
+        var jwtToken = localStorage.getItem("jwtToken");
         $.ajax({
             url: "/api/buildings/"+data,
             type:"DELETE",
+            headers: {
+                "Authorization": "Bearer " + jwtToken
+            },
             dataType : "JSON", //Định dạng dữ liệu nhận từ server
             // data : JSON.stringify(data), //Convert từ Object trong JS qua JSON
             // contentType: "application/json",

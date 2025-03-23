@@ -28,4 +28,5 @@ public interface IUserService {
     Map<Long, String> getListStaff();
     boolean isStaff(String userName1, String userName2);
     UserEntity register(UserDTO userDTO) throws ServiceException;
+    String login(String userName, String password) throws Exception;
 }

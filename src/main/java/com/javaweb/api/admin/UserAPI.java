@@ -69,7 +69,18 @@ public class UserAPI {
                 List<String> errorMessages = bindingResult.getFieldErrors()
                         .stream()
                         .map(FieldError::getDefaultMessage).collect(Collectors.toList());
+
                 return ResponseEntity.badRequest().body(errorMessages);
+            }
+            if(userDTO.getFullName()==null || userDTO.getFullName().trim().equals("")){
+                ResponseDTO responseDTO = new ResponseDTO();
+                responseDTO.setMessage("Full name is required");
+                return ResponseEntity.badRequest().body(responseDTO);
+            }
+            if(userDTO.getRetypePassword()==null || userDTO.getRetypePassword().trim().equals("")){
+                ResponseDTO responseDTO = new ResponseDTO();
+                responseDTO.setMessage("Retype password is required");
+                return ResponseEntity.badRequest().body(responseDTO);
             }
             if(!userDTO.getPassword().equals(userDTO.getRetypePassword())){
                 ResponseDTO responseDTO = new ResponseDTO();
@@ -87,5 +98,17 @@ public class UserAPI {
             return ResponseEntity.badRequest().body(responseDTO);
         }
 
+    }
+    @PostMapping("/login")
+    public ResponseEntity<?> login( @Valid @RequestBody UserDTO userDTO) {
+        try {
+            ResponseDTO responseDTO= new ResponseDTO();
+            String token = userService.login(userDTO.getUserName(), userDTO.getPassword());
+            responseDTO.setData(token);
+            responseDTO.setMessage("success");
+            return ResponseEntity.ok(responseDTO);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

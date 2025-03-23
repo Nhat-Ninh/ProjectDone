@@ -304,6 +304,7 @@
             deleteTransactions(id,customerId);
         }
     }
+    //AJAX
     function AddOrUpdateTransaction(data){
         var jwtToken = localStorage.getItem("jwtToken");
         $.ajax({
@@ -362,7 +363,7 @@
     function deleteTransactions(data,customerId){
         var jwtToken = localStorage.getItem("jwtToken");
         $.ajax({
-            url: "/api/transactions/"+data,
+            url: "/api/transactions/"+data+ "?customerId=" + customerId,
             type:"DELETE",
             headers: {
                 "Authorization": "Bearer " + jwtToken
