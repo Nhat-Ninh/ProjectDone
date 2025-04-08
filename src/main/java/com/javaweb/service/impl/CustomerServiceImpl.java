@@ -80,7 +80,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void deleteById(List<Long> ids) {
-        customerRepository.deleteByIdIn(ids);
+        List<CustomerEntity> customerEntities = customerRepository.findAllById(ids);
+        for (CustomerEntity customerEntity : customerEntities) {
+            customerEntity.setIsActive(0);
+        }
+        customerRepository.saveAll(customerEntities);
     }
 
     @Override

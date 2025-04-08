@@ -53,6 +53,7 @@ public class CustomerRepositoryImpl implements CustomerRepositoryCustom {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        where.append(" AND c.is_active = 1 ");
     }
     private void sqlWhereSpecial(CustomerSearchRequest builder, StringBuilder where) {
         Long staffId = builder.getStaffId();
@@ -69,6 +70,7 @@ public class CustomerRepositoryImpl implements CustomerRepositoryCustom {
         sqlWhereNormal(builder, where);
         sqlWhereSpecial(builder, where);
         sql.append(where).append(" GROUP BY c.id ");
+        sql.append(" ORDER BY c.createddate DESC ");
         sql.append(" LIMIT ").append(pageable.getPageSize()).append(" OFFSET ").append(pageable.getOffset());
 
         Query query = entityManager.createNativeQuery(sql.toString(), CustomerEntity.class);
