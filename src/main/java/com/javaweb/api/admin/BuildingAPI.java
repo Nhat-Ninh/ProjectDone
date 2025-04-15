@@ -1,8 +1,10 @@
 package com.javaweb.api.admin;
 
+import com.javaweb.kafka.JsonKafkaProducerService;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.model.response.StaffResponseDTO;
+import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,8 @@ import java.util.stream.Collectors;
 public class BuildingAPI {
   @Autowired
   private BuildingService buildingService;
+  @Autowired
+  private JsonKafkaProducerService jsonKafkaProducerService;
 
   @PostMapping
     public ResponseEntity<?> createOrUpdateBuilding(@Valid @RequestBody BuildingDTO buildingDTO, BindingResult bindingResult) {
@@ -34,6 +38,13 @@ public class BuildingAPI {
           buildingService.createOrUpdateBuilding( buildingDTO);
           ResponseDTO responseDTO = new ResponseDTO();
           responseDTO.setMessage("Success");
+          String staffName = SecurityUtils.getPrincipal().getUsername();
+          if(buildingDTO.getId()==null){
+            sendMessage("building-topic","-Created building has name "+buildingDTO.getName()+" By "+staffName+" Success" );
+          }
+          else {
+            sendMessage("building-topic", "-  Update building has name "+buildingDTO.getName()+" By "+staffName+" Success " );
+          }
           return ResponseEntity.ok().body(responseDTO);
         }
       }
@@ -58,6 +69,9 @@ public class BuildingAPI {
       buildingService.deleteById(ids);
       ResponseDTO responseDTO = new ResponseDTO();
       responseDTO.setMessage("Buildings deleted successfully");
+      String staffName = SecurityUtils.getPrincipal().getUsername();
+      String id = ids.stream().map(String::valueOf).collect(Collectors.joining(","));
+      sendMessage("building-topic","-Deleted building has id: ["+id+"] By "+staffName+" Success");
       return ResponseEntity.ok().body(responseDTO);
     }
 
@@ -70,6 +84,9 @@ public class BuildingAPI {
          ResponseDTO staffResponseDTOS = buildingService.findStaffByBuildingId(buildingId);
          return ResponseEntity.ok(staffResponseDTOS);
 
+  }
+  public void sendMessage(String topic, String message){
+    jsonKafkaProducerService.sendMessageForBuilding(topic,message);
   }
 
 

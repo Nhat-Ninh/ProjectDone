@@ -145,7 +145,6 @@ public class BuildingServiceImpl implements BuildingService {
      buildingRepository.deleteByIdIn(ids);
     }
 
-
     @Override
     public ResponseDTO findStaffByBuildingId(Long buildingId){
         List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1,"STAFF");
