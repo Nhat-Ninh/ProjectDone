@@ -1,9 +1,11 @@
 package com.javaweb.api.admin;
 
 
+import com.javaweb.kafka.JsonKafkaProducerService;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.dto.CustomerDTO;
 import com.javaweb.model.response.ResponseDTO;
+import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.BuildingService;
 import com.javaweb.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class CustomerAPI {
 
     @Autowired
     CustomerService customerService;
+    @Autowired
+    JsonKafkaProducerService jsonKafkaProducerService;
 
     @PostMapping
     public ResponseEntity<?> createOrUpdateBuilding(@Valid @RequestBody CustomerDTO customerDTO, BindingResult bindingResult) {
@@ -37,6 +41,13 @@ public class CustomerAPI {
                 customerService.createOrUpdateCustomer(customerDTO);
                 ResponseDTO responseDTO = new ResponseDTO();
                 responseDTO.setMessage("Success");
+                String staffName = SecurityUtils.getPrincipal().getUsername();
+                if(customerDTO.getId()==null){
+                    sendMessage("customer-topic","Create customer "+customerDTO.getFullName()+" By "+staffName+" successfully");
+                }
+                else {
+                    sendMessage("customer-topic","Update customer "+customerDTO.getFullName()+" By "+staffName+" successfully");
+                }
                 return ResponseEntity.ok().body(responseDTO);
             }
         }
@@ -61,6 +72,9 @@ public class CustomerAPI {
             customerService.deleteById(ids);
             ResponseDTO responseDTO = new ResponseDTO();
             responseDTO.setMessage("Customers deleted successfully");
+            String id = ids.stream().map(String::valueOf).collect(Collectors.joining(","));
+            String staffName = SecurityUtils.getPrincipal().getUsername();
+            sendMessage("customer-topic","Delete customer has id: {"+id+" By "+staffName+ " successfully");
             return ResponseEntity.ok().body(responseDTO);
         }
 
@@ -73,5 +87,8 @@ public class CustomerAPI {
         ResponseDTO staffResponseDTOS = customerService.findStaffByCustomerId(customerId);
         return ResponseEntity.ok(staffResponseDTOS);
 
+    }
+    public void sendMessage(String topic, String message) {
+        jsonKafkaProducerService.sendMessageForCustomer(topic, message);
     }
 }

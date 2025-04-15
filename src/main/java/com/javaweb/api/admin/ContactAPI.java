@@ -1,6 +1,7 @@
 package com.javaweb.api.admin;
 
 import com.javaweb.exception.ServiceException;
+import com.javaweb.kafka.JsonKafkaProducerService;
 import com.javaweb.model.dto.CustomerDTO;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.service.ContactService;
@@ -23,6 +24,8 @@ import java.util.stream.Collectors;
 public class ContactAPI {
     @Autowired
     private ContactService contactService;
+    @Autowired
+    private JsonKafkaProducerService jsonKafkaProducerService;
     @PostMapping("/send")
     public ResponseEntity<?> sendContact (@Valid @RequestBody CustomerDTO contactDTO, BindingResult bindingResult) {
         try {
@@ -42,6 +45,7 @@ public class ContactAPI {
                 contactService.addContact(contactDTO);
                 ResponseDTO responseDTO = new ResponseDTO();
                 responseDTO.setMessage("Thêm liên hệ thành công");
+                sendMessage("contact-topic","Have new contaction, customer's name is: " + contactDTO.getFullName());
                 return ResponseEntity.ok().body(responseDTO);
             }
             return null;
@@ -51,5 +55,8 @@ public class ContactAPI {
             responseDTO.setMessage(e.getMessage());
             return ResponseEntity.badRequest().body(responseDTO);
         }
+    }
+    public void sendMessage(String topic, String message){
+        jsonKafkaProducerService.sendMessageForContact(topic, message);
     }
 }
