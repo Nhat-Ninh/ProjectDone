@@ -14,10 +14,6 @@ import java.util.List;
 public class RoleEntity extends BaseEntity {
 
     private static final long serialVersionUID = -6525302831793188081L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name="name")
     private String name;
 
@@ -29,16 +25,6 @@ public class RoleEntity extends BaseEntity {
         return serialVersionUID;
     }
 
-    @Override
-    public Long getId() {
-
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @JsonBackReference
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)

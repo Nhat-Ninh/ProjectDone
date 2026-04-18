@@ -34,7 +34,7 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
     private void sqlWhereNormal(BuildingSearchRequest builder, StringBuilder where) {
         try {
             Field[] fields = BuildingSearchRequest.class.getDeclaredFields();
-            for (Field it : fields) {
+            for (Field it  : fields) {
                 it.setAccessible(true);
                 String fieldName = it.getName();
                 if (!fieldName.equals("staffId") && !fieldName.startsWith("rentArea")

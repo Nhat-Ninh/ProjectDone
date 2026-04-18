@@ -31,7 +31,7 @@
 		<div class="row navbar">
 			<div class="col-12 col-md-3">
 				<div class="logo">
-					<a href="">
+						<a href='<c:url value="/trang-chu"/>'>
 						<img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/logo.png?1676257083798"
 							 alt="">
 					</a>
@@ -79,7 +79,7 @@
 						<%--<span class="sr-only">(current)</span>--%>
 					<%--</a></li>--%>
 					<security:authorize access = "isAnonymous()">
-						<li class><a class="nav-link" href="<c:url value='/login'/>">Đăng nhập</a></li>
+						<li class="nav-item"><a class="nav-link" href="<c:url value='/login'/>">Đăng nhập</a></li>
 						<li class="nav-item"><a class="nav-link" href="<c:url value='/register'/>" >Đăng ký</a></li>
 					</security:authorize>
 					<security:authorize access = "isAuthenticated()">

@@ -11,9 +11,8 @@ import java.util.Date;
 @Entity
 @Table(name = "assignmentcustomer")
 public class AssignmentCustomerEntity extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public AssignmentCustomerEntity() {
+    }
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "staffid")

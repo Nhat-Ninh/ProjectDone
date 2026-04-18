@@ -96,7 +96,6 @@ public class BuildingServiceImpl implements BuildingService {
         String typeCode = buildingEntity.getType();
         buildingDTO.setTypeCode(Arrays.asList(typeCode.split(",")));
 
-
         return buildingDTO;
     }
 

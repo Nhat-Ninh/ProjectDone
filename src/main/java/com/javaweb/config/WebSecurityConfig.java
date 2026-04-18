@@ -4,6 +4,7 @@ import com.javaweb.config.filter.JwtTokenFilter;
 import com.javaweb.security.CustomSuccessHandler;
 import com.javaweb.security.utils.JwtTokenUtil;
 import com.javaweb.service.impl.CustomUserDetailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,6 +23,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
 
     @Bean
@@ -53,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
                 http.csrf().disable()
-                        .addFilterBefore(jwtTokenFilter(userDetailsService(),new JwtTokenUtil()), UsernamePasswordAuthenticationFilter.class)
+                        .addFilterBefore(jwtTokenFilter(userDetailsService, jwtTokenUtil), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                         .antMatchers(HttpMethod.POST,"/api/transactions").hasAnyRole("MANAGER","STAFF")
                         .antMatchers(HttpMethod.DELETE,"/api/transactions/{id}").hasRole("MANAGER")

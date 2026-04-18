@@ -13,6 +13,9 @@ import java.util.List;
 @Entity
 @Table(name = "building")
 public class BuildingEntity extends BaseEntity {
+    public BuildingEntity() {
+    }
+
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private Long id;

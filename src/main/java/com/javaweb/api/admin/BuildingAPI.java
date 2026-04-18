@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,7 +34,7 @@ public class BuildingAPI {
         }
         //xuong service va repo de them
         else {
-          buildingService.createOrUpdateBuilding( buildingDTO);
+          buildingService.createOrUpdateBuilding(buildingDTO);
           ResponseDTO responseDTO = new ResponseDTO();
           responseDTO.setMessage("Success");
           String staffName = SecurityUtils.getPrincipal().getUsername();

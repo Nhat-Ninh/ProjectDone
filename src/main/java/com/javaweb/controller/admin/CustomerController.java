@@ -26,6 +26,7 @@ import java.util.List;
 
 @RestController
 public class CustomerController {
+
     @Autowired
     private UserServiceImpl userService;
     @Autowired
@@ -75,7 +76,7 @@ public class CustomerController {
                 return mav;
             }
         }
-        //findbuidlingbyid=>buildingDTO\
+        //findbuidlingbyid=>buildingDTO
         CustomerDTO dto = new CustomerDTO();
         try{
             dto = customerService.findCustomerById(id);

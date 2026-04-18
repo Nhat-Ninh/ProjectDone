@@ -58,7 +58,7 @@
             <div class="col-xs-12 a-left">
                 <ul class="desc-intro">
                     <li class="home">
-                        <a href="./ViewHome.html"><span style="color:#fff">Trang chủ</span></a>
+                        <a href='<c:url value="/trang-chu"/>'><span style="color:#fff">Trang chủ</span></a>
                         <span class="mx-1" style="color:#fff"> / </span>
                     </li>
                     <li class="intro-item"><span>Liên hệ</span></li>
@@ -140,7 +140,7 @@
         <div class="container">
             <div class="top-footer text-center mt-0">
                 <div class="logo logo-footer pt-5">
-                    <a href="./ViewHome.html"><img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/logo_footer.png?1676257083798" alt="logo-footer"></a>
+                    <a href='<c:url value="/trang-chu"/>'><img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/logo_footer.png?1676257083798" alt="logo-footer"></a>
                     <p class="desc-logo-footer mt-3">Với hơn 10 năm kinh nghiệm, SkyLand tự hào là sàn
                         mua
                         bán, giao dịch và quảng cáo
@@ -158,7 +158,7 @@
                             </div>
                             <div class="col-12 col-md-4 text-center">
                                 <div class="icon-footer">
-                                    <img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/place_phone.png?1676257083798 alt="">
+                                    <img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/place_phone.png?1676257083798" alt="">
                                 </div>
                                 <div class="content-center-footer">
                                     <p class="mb-1 mt-3">Hotline</p>
@@ -167,7 +167,7 @@
                             </div>
                             <div class="col-12 col-md-4 text-center">
                                 <div class="icon-footer">
-                                    <img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/place_email.png?1676257083798g" alt="">
+                                    <img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/place_email.png?1676257083798" alt="">
                                 </div>
                                 <div class="content-center-footer">
                                     <p class="mb-1 mt-3">Email</p>

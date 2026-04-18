@@ -11,6 +11,9 @@ import javax.persistence.*;
 @Table(name = "rentarea")
 
 public class RentAreaEntity extends BaseEntity {
+    public RentAreaEntity() {
+    }
+
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private Long id;

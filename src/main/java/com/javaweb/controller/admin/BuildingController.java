@@ -1,7 +1,5 @@
 package com.javaweb.controller.admin;
 
-
-
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.enums.District;
 import com.javaweb.enums.TypeCode;
@@ -16,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -28,6 +25,7 @@ public class BuildingController {
     private UserServiceImpl userService;
     @Autowired
     private BuildingService buildingService;
+
    @RequestMapping(value = "/admin/building-list", method = RequestMethod.GET)
    public ModelAndView getBuildings(@ModelAttribute("modelSearch") BuildingSearchRequest params, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView( "admin/building/list");
@@ -40,14 +38,13 @@ public class BuildingController {
            Long staffId = SecurityUtils.getPrincipal().getId();
            params.setStaffId(staffId);
        }
-        List<BuildingSearchResponse> results = buildingService.findAll(params, PageRequest.of(params.getPage()-1, params.getMaxPageItems() )) ;
+        List<BuildingSearchResponse> results = buildingService.findAll(params, PageRequest.of(params.getPage()-1, params.getMaxPageItems()));
         BuildingSearchResponse buildingList = new BuildingSearchResponse();
         buildingList.setTotalItems(buildingService.countBuilding(params));
         buildingList.setListResult(results);
         mav.addObject("buildingList", buildingList);
         return mav;
-    }
-
+   }
 
     @GetMapping("/admin/building-edit")
     public ModelAndView addBuilding(@ModelAttribute("building") BuildingDTO buildingDTO){ //them moi toa nha

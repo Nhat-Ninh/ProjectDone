@@ -9,9 +9,8 @@ import javax.persistence.*;
 @Setter
 @Table(name ="transaction")
 public class TransactionEntity extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public TransactionEntity() {
+    }
     @Column(name = "code")
     private String code;
     @Column(name = "note")

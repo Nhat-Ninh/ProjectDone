@@ -14,9 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class CustomerEntity extends BaseEntity {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
   @Column(name = "fullname")
   private String fullName;
   @Column(name = "phone")

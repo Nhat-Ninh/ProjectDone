@@ -2,9 +2,11 @@ package com.javaweb.api.admin;
 
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.exception.ServiceException;
+import com.javaweb.kafka.JsonKafkaProducerService;
 import com.javaweb.model.dto.PasswordDTO;
 import com.javaweb.model.dto.UserDTO;
 import com.javaweb.model.response.ResponseDTO;
+import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +24,13 @@ public class UserAPI {
 
     @Autowired
     private IUserService userService;
+    @Autowired
+    private JsonKafkaProducerService jsonKafkaProducerService;
 
     @PostMapping
     public ResponseEntity<UserDTO> createUsers(@RequestBody UserDTO newUser) {
+        String staffName = SecurityUtils.getPrincipal().getUsername();
+        sendMessage("user-topic","Create user: "+newUser.getUserName()+" By ");
         return ResponseEntity.ok(userService.insert(newUser));
     }
 
@@ -107,8 +113,12 @@ public class UserAPI {
             responseDTO.setData(token);
             responseDTO.setMessage("success");
             return ResponseEntity.ok(responseDTO);
-        }catch (Exception e) {
+        }
+        catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+    public void sendMessage(String topic, String message){
+        jsonKafkaProducerService.sendMessageForUser(topic, message);
     }
 }

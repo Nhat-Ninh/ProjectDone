@@ -3,7 +3,7 @@
 <%@include file="/common/taglib.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<link>
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -161,7 +161,7 @@
             <div class="col-xs-12 a-left">
                 <ul class="desc-intro">
                     <li class="home" style="color: #fff;">
-                        <a href="/trang-chu#"><span style="color: #fff;">Trang chủ</span></a>
+                        <a href='<c:url value="/trang-chu"/>'><span style="color: #fff;">Trang chủ</span></a>
                         <span class="mx-1"> /</span>
                     </li>
                     <li class="intro-item"><span>Giới thiệu</span></li>
@@ -235,7 +235,7 @@
         <div class="container-fluid">
             <div class="top-footer text-center mt-0">
                 <div class="logo logo-footer pt-5">
-                    <a href="./ViewHome.html"><img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/logo_footer.png?1676257083798 alt="logo-footer"></a>
+                    <a href='<c:url value="/trang-chu"/>'><img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/logo_footer.png?1676257083798" alt="logo-footer"></a>
                     <p class="desc-logo-footer mt-3">Với hơn 10 năm kinh nghiệm, SkyLand tự hào là sàn
                         mua
                         bán, giao dịch và quảng cáo

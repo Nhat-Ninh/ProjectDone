@@ -1,6 +1,5 @@
 package com.javaweb.api.admin;
 
-
 import com.javaweb.kafka.JsonKafkaProducerService;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.dto.CustomerDTO;
@@ -13,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,7 +37,7 @@ public class CustomerAPI {
             //xuong service va repo de them
             else {
                 customerService.createOrUpdateCustomer(customerDTO);
-                ResponseDTO responseDTO = new ResponseDTO();
+                ResponseDTO responseDTO = new ResponseDTO();    
                 responseDTO.setMessage("Success");
                 String staffName = SecurityUtils.getPrincipal().getUsername();
                 if(customerDTO.getId()==null){
